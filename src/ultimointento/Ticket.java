@@ -48,9 +48,11 @@ public class Ticket {
                             }
                                             Venta v = null;   
                                                         do{  
-                                                             try{    
+                                                             try{ 
+                                                                 do{
                                                                  v=ac.recorrerString();
                                                                  v.toString();
+                                                                 }while(v!=null);
                                                            } catch (FileNotFoundException ex) {
                                                                System.out.println("ha fallado ...");;
                                                            }

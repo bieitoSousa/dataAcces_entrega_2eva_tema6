@@ -106,7 +106,7 @@ public class AccesoDatos {
                         System.out.println("no se ha podido cerrar el archivo");
                     }
                 }   } catch (IOException ex) {
-                Logger.getLogger(AccesoDatos.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("no se puede verificar la etapa del archivo");
             }
         return v;
     }   

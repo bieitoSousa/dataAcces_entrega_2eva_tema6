@@ -20,15 +20,12 @@ public class Ultimointento {
      */
     public static void main(String[] args) {
         
-System.out.println(" comenzar ...");
+
 AccesoDatos ac = new AccesoDatos(); 
 Tienda t = new Tienda(ac);
-System.out.println(" a ...");
-System.out.println(ac.urlpath);
 
- System.out.println(" b ...");
 //muestra el codigo y el precio
-t.mostarCodigos(); // te muestra los Codigos
+
 int op = 0;
 do {
     

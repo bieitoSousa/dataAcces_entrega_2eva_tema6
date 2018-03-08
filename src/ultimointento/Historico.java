@@ -21,7 +21,7 @@ public class Historico {
 
             @Override
             public String toString(){
-            return "Codigo : " + codigo + "cantidad " + historico ;
+            return "Codigo : " + codigo + "  cantidad " + historico ;
             }
 
 

@@ -19,7 +19,7 @@ public class Codigo {
         }
         @Override
         public String toString(){
-        return  "Codigo : " + codigo + "precio " + precio ;
+        return  "Codigo : " + codigo + "  precio " + precio ;
         }
 
 } 

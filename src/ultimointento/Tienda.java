@@ -70,13 +70,13 @@ if (ac.fhistorico.exists()){
 }else{
   */  
     
-    System.out.println("acacccccccccc");
+    
 String [] codigo = new String [11];
 int [] historico = new int [11];
 
 
 for (int i=0;i<cd.length;i++ ){
-his [i]= new Historico ( codigo[i] , 0 );
+his [i]= new Historico ( this.cd[i].codigo , 0 );
 
 }
 /*}*/
@@ -98,7 +98,7 @@ historico[i].historico++;
 void mostarCodigos ( ){
         System.out.println("===============   CODIGOS  ====================");
 for (int i=0;i<cd.length;i++ ){
-cd [i].toString(); 
+    System.out.println(cd[i].toString() );
 } System.out.println("===============   FIN CODIGOS  ====================");
 }
 
@@ -106,7 +106,7 @@ cd [i].toString();
 void mostarHistorico ( ){
     System.out.println("===============   HISTORICO  ====================");
 for (int i=0;i<this.historico.length;i++ ){
-this.historico [i].toString();
+    System.out.println(this.historico[i].toString());
 
 }
 
