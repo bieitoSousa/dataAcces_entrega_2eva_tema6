@@ -96,11 +96,22 @@ historico[i].historico++;
 }
 
 void mostarCodigos ( ){
+        System.out.println("===============   CODIGOS  ====================");
 for (int i=0;i<cd.length;i++ ){
 cd [i].toString(); 
-}}
+} System.out.println("===============   FIN CODIGOS  ====================");
+}
 
 
+void mostarHistorico ( ){
+    System.out.println("===============   HISTORICO  ====================");
+for (int i=0;i<this.historico.length;i++ ){
+this.historico [i].toString();
+
+}
+
+ System.out.println("===============   FIN HISTORICO  ====================");
+}
 
 /**
 * recoje un String  y optine Codigo
@@ -108,7 +119,7 @@ cd [i].toString();
 *
 */
 
-Codigo codigoExists(String a) {
+Codigo EncontrarCodigo(String a) {
 
 Codigo aux =null;
 
@@ -122,6 +133,27 @@ Codigo aux =null;
 return aux;
 }
 
+
+boolean codigoExists(String a) {
+
+boolean aux =false;
+
+	for (int i=0;i<this.cd.length;i++ ){
+		if (this.cd[i].codigo.equals(a)){
+			aux =true;
+			
+		} 
+	}
+
+return aux;
+}
+
+
+
+
+
+
+
     int menu() {
         
         System.out.println("------------------------");
@@ -133,4 +165,6 @@ return aux;
         int out =Integer.parseInt(sc.nextLine());
      return out;
     }
+    
+  
 }

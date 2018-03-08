@@ -31,12 +31,16 @@ System.out.println(ac.urlpath);
 t.mostarCodigos(); // te muestra los Codigos
 int op = 0;
 do {
+    
+    t.mostarCodigos();
+    t.mostarHistorico();
+    
 		 op =t.menu(); 
 
 		switch (op){
 
 				case 1 : // mostrar ticket
-                                    System.out.println("cas1");
+                                    System.out.println("Empezamos el Ticket");
 					Ticket tck = new Ticket(ac,t);// creamos un ticket y le damos acceso a Accesoatos para que guarde los datos;
 					tck.RealizarticketStream();// pide los datos y los guara en un stream os va mostrando;
                                         tck.mostrar(); 					

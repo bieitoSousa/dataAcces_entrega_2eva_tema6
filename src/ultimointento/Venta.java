@@ -15,14 +15,14 @@ class Venta {
    int precio;
    int dia;
    int mes ;
-   int ano ;
+   long ano ;
    
    Venta(
    String codigo ,
    int precio,
    int dia,
    int mes ,
-   int ano 
+   long ano 
    ){
         this.codigo= codigo ;
         this.precio=precio;

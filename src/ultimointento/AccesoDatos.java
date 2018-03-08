@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class AccesoDatos {
 
 
-	final String urlpath = "C:\\Users\\bieito\\Documents\\temp\\Java";
+	final String urlpath = "C:\\Users\\bsousa\\Documents\\temp\\Java";
 	final String urlcodigo = urlpath+"codigo.dat";
 	final String urlhistorico = urlpath+"historico.dat";
 	
@@ -41,11 +41,17 @@ public class AccesoDatos {
             try {
                 fc=new DataOutputStream(new FileOutputStream(fcodigo,true));
                 try {
+                    System.out.println("Escribiendo datos en el  Stream");
                     fc.writeUTF(codigo);
+                    System.out.println("Escribe string codigo "+codigo);
                     fc.writeByte(precio);
+                    System.out.println("Escribe int precio "+precio);
                     fc.writeByte(dia);
+                    System.out.println("Escribe int dia "+dia);
                     fc.writeByte(mes);
-                    fc.writeByte(ano);
+                    System.out.println("Escribe int mes "+mes);
+                    fc.writeLong(ano);
+                    System.out.println("Escribe int ano "+ano);
                     } catch (IOException ex) {
                      System.out.println("No se ha podido escribir en el Fichero");   }
 
@@ -59,11 +65,18 @@ public class AccesoDatos {
      private Venta readVenta(DataInputStream fr) {
          Venta v = null;
         try {
+            
+               System.out.println("Leemos datos del Stream");
                  String codigo = fr.readUTF();
+                 System.out.println("leer string codigo "+codigo);
                  int precio= fr.readByte();
+                 System.out.println("leer int  "+precio);
 		 int dia= fr.readByte();
+                 System.out.println("leer int "+dia);
 		 int mes =fr.readByte();
-		 int ano =fr.readByte();
+                 System.out.println("leer int mes "+mes);
+		 long ano =fr.readLong();
+                 System.out.println("leer long ano "+ano);
                   
                 v= new Venta(codigo,precio,dia,mes,ano); 
                  

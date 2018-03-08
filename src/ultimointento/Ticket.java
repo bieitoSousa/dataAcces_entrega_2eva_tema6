@@ -20,7 +20,7 @@ public class Ticket {
     AccesoDatos ac;
     Tienda t;
     Fecha fecha = new Fecha();
-    Codigo [] cd = t.cd;
+    Codigo [] cd = new Codigo [11];
     int importe ;
     int dia = fecha.getintDia();
     int mes = fecha.getintMes();
@@ -29,7 +29,7 @@ public class Ticket {
 	Ticket(AccesoDatos ac, Tienda t) {
 	this.ac = ac;
         this.t = t;
-	
+	this.cd = t.cd;
 	
 	}
 
@@ -38,8 +38,8 @@ public class Ticket {
 		do { 
 			System.out.println("introuce el codigo [-1 para salir ]");
 				cdtxt = sc.nextLine();
-				if (t.codigoExists(cdtxt)!= null){
-					Codigo cd = t.codigoExists(cdtxt);
+				if (t.codigoExists(cdtxt)){
+					Codigo cd = t.EncontrarCodigo(cdtxt);
 					this.importe = this.importe +cd.precio;
                             try {
                                 ac.addStrim(cd.codigo ,cd.precio,dia,mes,ano);
