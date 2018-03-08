@@ -58,7 +58,7 @@ public class Ticket {
 						
 				}
 
-		}while(Integer.parseInt(cdtxt) != -1 );
+		}while(cdtxt.equals("-1") );
 
 	}
 
