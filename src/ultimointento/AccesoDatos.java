@@ -7,6 +7,7 @@ package ultimointento;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,8 +22,9 @@ import java.util.logging.Logger;
  */
 public class AccesoDatos {
 
-
-	final String urlpath = "C:\\Users\\bsousa\\Documents\\temp\\Java";
+     
+    
+	final String urlpath = "C:\\Users\\bieito\\Documents\\temp\\Java";
 	final String urlcodigo = urlpath+"codigo.dat";
 	final String urlhistorico = urlpath+"historico.dat";
 	
@@ -33,25 +35,25 @@ public class AccesoDatos {
 	AccesoDatos(){
         fpath.mkdirs();
         }
-	
-	void addStrim(String codigo ,int precio,int dia,int mes,int ano) throws IOException{
+ //-------------------------------------Fin de Paquete de Paquete VENTAS ------------------------------------------------------///     	
+	void addStrim(String codigo ,int precio,int dia,int mes,long ano) throws IOException{
             this.fcodigo.createNewFile();
             
             DataOutputStream fc=null;
             try {
                 fc=new DataOutputStream(new FileOutputStream(fcodigo,true));
                 try {
-                    System.out.println("Escribiendo datos en el  Stream");
+                    //System.out.println("Escribiendo datos en el  Stream");
                     fc.writeUTF(codigo);
-                    System.out.println("Escribe string codigo "+codigo);
+                    //System.out.println("Escribe string codigo "+codigo);
                     fc.writeByte(precio);
-                    System.out.println("Escribe int precio "+precio);
+                    //System.out.println("Escribe int precio "+precio);
                     fc.writeByte(dia);
-                    System.out.println("Escribe int dia "+dia);
+                    //System.out.println("Escribe int dia "+dia);
                     fc.writeByte(mes);
-                    System.out.println("Escribe int mes "+mes);
+                    //System.out.println("Escribe int mes "+mes);
                     fc.writeLong(ano);
-                    System.out.println("Escribe int ano "+ano);
+                    //System.out.println("Escribe int ano "+ano);
                     } catch (IOException ex) {
                      System.out.println("No se ha podido escribir en el Fichero");   }
 
@@ -61,114 +63,148 @@ public class AccesoDatos {
 
 	}	
 
-        
-     private Venta readVenta(DataInputStream fr) {
-         Venta v = null;
-        try {
+
+ Venta mostrarStream() throws IOException {
+      DataInputStream fr = null;
+       Venta v=null;
+       int total=0;
+       try {    
+                fr = new DataInputStream(
+                        new FileInputStream( fcodigo));
+            while (true) {
+                        
+                String codigo = fr.readUTF();
+                //System.out.println("leo codigo "+codigo);
+                int precio = fr.readByte();       // Elimina el tab
+                //System.out.println("leo precio "+precio);
+                int dia = fr.readByte();
+                //System.out.println("leo dia "+dia);
+                 int mes = fr.readByte();       // Elimina el tab
+                //System.out.println("leo dia "+mes);
+                 long ano = fr.readLong();
+                //System.out.println("leo dia "+ano); 
+                  v = new Venta(codigo,precio,dia,mes,ano);
+                  System.out.println(v.toString());
+                //System.out.println(codigo +"---"+precio+"---"+"---"+dia+"---"+mes+"---"+ano);
+                //System.out.println(v.toString()); 
+                total= total+v.precio; 
+            }   
             
-               System.out.println("Leemos datos del Stream");
-                 String codigo = fr.readUTF();
-                 System.out.println("leer string codigo "+codigo);
-                 int precio= fr.readByte();
-                 System.out.println("leer int  "+precio);
-		 int dia= fr.readByte();
-                 System.out.println("leer int "+dia);
-		 int mes =fr.readByte();
-                 System.out.println("leer int mes "+mes);
-		 long ano =fr.readLong();
-                 System.out.println("leer long ano "+ano);
-                  
-                v= new Venta(codigo,precio,dia,mes,ano); 
-                 
-             } catch (IOException ex) {
-                 System.out.println("no se ha podido leer el archivo de codigos");
-             }
-     return v;
-     }    
-        
-        
-    Venta recorrerString() throws FileNotFoundException {
-        
-        
-         DataInputStream fr =null;
-            fr=new DataInputStream(new FileInputStream(fcodigo));
             
-        Venta v=null;
-              
-        if (fr==null) fr=new DataInputStream(new FileInputStream(fcodigo));
+            
+         } catch (EOFException e) {
+             System.out.println("total : "+total);   
+         } catch (FileNotFoundException ex) {
+         } catch (IOException ex) { 
+         }finally { fr.close();} 			
+		return v;		}
+           
+           
+           
+  Venta actualizarhistoricosconventas(Tienda t) throws IOException {
+      DataInputStream fr = null;
+       Venta v=null;
+       int total=0;
+       try {    
+                fr = new DataInputStream(
+                        new FileInputStream( fcodigo));
+            while (true) {
+                        
+                String codigo = fr.readUTF();
+                //System.out.println("leo codigo "+codigo);
+                int precio = fr.readByte();       
+                //System.out.println("leo precio "+precio);
+                int dia = fr.readByte();
+                //System.out.println("leo dia "+dia);
+                 int mes = fr.readByte();       
+                //System.out.println("leo dia "+mes);
+                 long ano = fr.readLong();
+                //System.out.println("leo dia "+ano); 
+                  v = new Venta(codigo,precio,dia,mes,ano);
+                  t.actualizaHistorico(v.codigo);       
+                //System.out.println(codigo +"---"+precio+"---"+"---"+dia+"---"+mes+"---"+ano);
+                //System.out.println(v.toString()); 
+               
+            }   
+            
+            
+            
+         } catch (EOFException e) {
+             System.out.println("total : "+total);   
+         } catch (FileNotFoundException ex) {
+         } catch (IOException ex) { 
+         }finally { fr.close();} 			
+		return v;		}    
+           
+    //-------------------------------------Fin de Paquete de Paquete VENTAS ------------------------------------------------------///       
+
+    void actualizarFicheroHistorico(Tienda t) throws IOException {
+        escribirHistorico(t);
+        System.out.println("========================= SE HA ESCRITO hISTORICO");
+        leerHistorico(t);
+        System.out.println("========================= SE HA LEIDO hISTORICO");
+    }
+    
+    void escribirHistorico(Tienda t) throws IOException{
+    int z = 0; 
+            this.fhistorico.delete();
+            this.fhistorico.createNewFile(); 
+        for ( int i=0 ; i<t.historico.length;i++){
+            DataOutputStream fc=null;
             try {
-                if (fr.available()>0) v=readVenta(fr);
-                else {
-                    try {
-                        fr.close();
-                        fr=null;
+                fc=new DataOutputStream(new FileOutputStream(this.fhistorico,true));
+                try {
+                    //System.out.println("Escribiendo datos en el Historico");
+                   
+                    fc.writeUTF(t.historico[i].codigo);
+                    System.out.println("Escribe string codigo "+t.historico[i].codigo);
+                    fc.writeByte(t.historico[i].historico);
+                    System.out.println("Escribe int historico "+t.historico[i].historico);
                     } catch (IOException ex) {
-                        System.out.println("no se ha podido cerrar el archivo");
-                    }
-                }   } catch (IOException ex) {
-                System.out.println("no se puede verificar la etapa del archivo");
+                     System.out.println("No se ha podido escribir en el Fichero");   }
+
+            } finally {
+                if (fc!=null) fc.close();
             }
-        return v;
-    }   
-                 
-       void mostrarStream(){
-      Venta v = null;   
-            do{  
-                 try{    
-                     v=recorrerString();
-                     v.toString();
-               } catch (FileNotFoundException ex) {
-                   System.out.println("ha fallado ...");;
-               }
-          }while(v != null);
-						
-				}
-
+      }   
+    } 
     
-     void escribirHistorico(Historico h) throws IOException {
-         this.fhistorico.createNewFile();
-        DataOutputStream oos=null;
-        DataInputStream ois=null;
-
-        
-        try {
-                oos=new DataOutputStream(new FileOutputStream(this.fhistorico)); // Escribimos no novo
-                    oos.writeUTF(h.codigo);
-                    oos.write(h.historico);  
-                // Non estaba no histórico, necesitamos procesar a venta
-                } catch (IOException ex) {
-                    
-                    System.out.println("Produciuse un erro, non se procesou o arquivo.");
-
-        } finally {
-            if (oos!=null) oos.close();
-            if (ois!=null) ois.close();
-        }
     
-     }
-         Historico LeerHistorico() throws IOException {
-        DataOutputStream oos=null;
-        DataInputStream ois=null;
-        
-        Historico h = null;
-
-        
-        try {
-                oos=new DataOutputStream(new FileOutputStream(this.fhistorico)); // Escribimos no novo
-                String cod = ois.readUTF();
-                int hist = ois.read();
-                h=new Historico(cod,hist); 
-                // Non estaba no histórico, necesitamos procesar a venta
-                } catch (IOException ex) {
-                    System.out.println("Produciuse un erro, non se procesou o arquivo.");
-                     
+    
+    public Historico [] leerHistorico(Tienda t) throws IOException{
+        int z =0;
+        Historico [] h = new Historico[11];
+      
+      DataInputStream fr = null;
+     
+      Venta v=null;
+      
+       try {  
+            
+           fr = new DataInputStream(
+          new FileInputStream( this.fhistorico));
+           System.out.println("historico length vale : "+t.historico.length);
+           for ( int i=0 ; i<t.historico.length;i++){ 
+           
+                String str = fr.readUTF();             
+                System.out.println("leo codigo "+str);
+                int p = fr.readByte(); 
+                System.out.println("leo historico "+p);
                 
-        } finally {
-            if (ois!=null) ois.close();
-        }
-     return h;  
-     }
+                //t.historico[i].historico = t.haux[i].historico = p ;
+                //t.historico[i].codigo= t.haux[i].codigo = str;           
+                h[i]=new Historico (str,p);
+            }   
+         } catch (EOFException e) {
+             
+         } catch (FileNotFoundException ex) {
+         } catch (IOException ex) { 
+         }finally { fr.close();} 			
+		
+        return h ;
+    
+
     
     
-    
+}
 }

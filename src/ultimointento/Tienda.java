@@ -14,23 +14,30 @@ import java.util.logging.Logger;
  *
  * @author bieito
  */
-public class Tienda {
+    public class Tienda {
     
 Scanner sc = new Scanner(System.in); 
 
-public Codigo [] cd = crearCodigos();
+public Codigo [] cd = new Codigo[11];
 
-public Historico [] historico = crearHistorico();
+public Historico [] historico = new Historico[11];
+
+public Historico [] haux = new Historico[11];
 
 public AccesoDatos ac ;
 
 
 Tienda(AccesoDatos ac){
 
-this.ac=ac;}
+this.ac=ac;
+crearCodigos();
+    System.out.println("se han creado los codigos");
+crearHistorico();
+    System.out.println("se ha creado el historico");
+}
 
-Codigo [] crearCodigos() {
-    System.out.println("hola");
+void crearCodigos() {
+ System.out.println("creando historicos");   
 Codigo [] cd = new Codigo [11];
 String [] codigo = new String [11];
 int [] precio = new int [11];
@@ -43,46 +50,48 @@ int [] precio = new int [11];
     }
 //crear el objeto codigo
     for (int i=0;i<cd.length;i++ ){
-         cd [i]= new Codigo ( codigo[i] , precio[i] );
+         this.cd[i]= new Codigo ( codigo[i] , precio[i] );
     }
-    System.out.println("finaliz");
-return cd ;
+   
+
+
+}
+void crearHistoriacoaux(){
+System.out.println("historico ---empezar camino historicso desde 0");
+            String [] codigo = new String [11];
+            int [] historico = new int [11];
+            for (int i=0;i<cd.length;i++ ){
+            this.haux[i]= new Historico ( this.cd[i].codigo ,0 );}
 
 }
 
 
 
 
-Historico [] crearHistorico() {
 
-Historico [] his = new Historico [11];
-    System.out.println("23456789");
-    /***
-if (ac.fhistorico.exists()){
-    System.out.println("eeeeeeeeeerrrrooorrr");
-    for (int i=0;i<his.length;i++){
-        try {
-            his[i]= ac.LeerHistorico();
-        } catch (IOException ex) {
-            System.out.println("fallo");
-        }
+ void crearHistorico() {
+    System.out.println("creando historicos");
+    try {
+        System.out.println("exists devuelve un "+ac.fhistorico.exists());
+        System.out.println("length devuelve un "+ac.fhistorico.length());
+        if (!(ac.fhistorico.exists())|(ac.fhistorico.length()<4)){
+            System.out.println("historico ---empezar camino historicso desde 0");
+            String [] codigo = new String [11];
+            int [] historico = new int [11];
+            for (int i=0;i<cd.length;i++ ){
+            this.historico[i]= new Historico ( this.cd[i].codigo ,0 );
+            }
+        }else{
+            System.out.println("historico ---empezar camino leer historicos del fichero");
+       this.historico = ac.leerHistorico(this);
+             System.out.println("historico ---fin camino leer historicos del fichero");}
+    } catch (IOException   ex) {
+        //creo uno vacio    
+           
+    }
 }
-}else{
-  */  
-    
-    
-String [] codigo = new String [11];
-int [] historico = new int [11];
 
 
-for (int i=0;i<cd.length;i++ ){
-his [i]= new Historico ( this.cd[i].codigo , 0 );
-
-}
-/*}*/
-return his;
-
-}
 
 void SumarHistorico (String histadd){
 for ( int i=0 ; i>historico.length;i++){
@@ -165,6 +174,22 @@ return aux;
         int out =Integer.parseInt(sc.nextLine());
      return out;
     }
+
+    void actualizaHistorico(String codigo) {
+        
+      for(int i =0;i<this.historico.length;i++ )  
+       if (this.historico[i].codigo.equals(codigo)){ 
+        this.historico[i].historico++;
+       }
+    }
+
+    void meterVentasEnArrayHistorico() throws IOException {
+        System.out.println("1");
+        ac.actualizarhistoricosconventas(this);
+        System.out.println("fin");
+       
+    }
+
     
   
 }

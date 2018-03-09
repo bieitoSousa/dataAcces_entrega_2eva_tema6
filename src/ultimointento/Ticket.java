@@ -35,50 +35,34 @@ public class Ticket {
 
 	public void RealizarticketStream(){
             String cdtxt = "" ;
+            Venta v = null;
 		do { 
-			System.out.println("introuce el codigo [-1 para salir ]");
-				cdtxt = sc.nextLine();
-				if (t.codigoExists(cdtxt)){
-					Codigo cd = t.EncontrarCodigo(cdtxt);
-					this.importe = this.importe +cd.precio;
-                            try {
-                                ac.addStrim(cd.codigo ,cd.precio,dia,mes,ano);
-                            } catch (IOException ex) {
+			System.out.println("introuce el codigo [-1 para salir ]");// mensage por pantalla
+				cdtxt = sc.nextLine(); // cojo la entrada por taclado
+
+				if (t.codigoExists(cdtxt)){// verifico si el codigo coincide 
+                                    Codigo cd = t.EncontrarCodigo(cdtxt); // si sirve lo guardo
+                                    try {
+                                        ac.addStrim(cd.codigo ,cd.precio,dia,mes,ano); // lo meto en un stream
+                                        v =ac.mostrarStream();
+                                    } catch (IOException ex) {
+                                    }
+                                      	
+
                                 
-                            }
-                                            Venta v = null;   
-                                                        do{  
-                                                             try{ 
-                                                                 do{
-                                                                 v=ac.recorrerString();
-                                                                 v.toString();
-                                                                 }while(v!=null);
-                                                           } catch (FileNotFoundException ex) {
-                                                               System.out.println("ha fallado ...");;
-                                                           }
-                                                      }while(v != null);
-						
-				}
+                                       }
+                                             
 
-		}while(cdtxt.equals("-1") );
-
-	}
+                    }while(!(cdtxt.equals("-1")) );
 
 
-	void mostrar(){
 	
-		System.out.println ("========================");
-		
-			ac.mostrarStream();
-			System.out.println ("Total : ___"+importe+"___");
-		
-		System.out.println ("=========================");
 		
 	
 	
 	} 
 	
-	
-	
 }
+	
+
 

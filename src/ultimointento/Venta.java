@@ -36,7 +36,7 @@ class Venta {
    @Override
     public String toString (){
     
-    return "El codigo : "+codigo +"-->"+precio+"  "+dia+"-"+mes+"-"+ano;
+    return "El codigo : "+codigo +"--> Precio "+precio+"  "+dia+"-"+mes+"-"+ano;
     }
     
     
